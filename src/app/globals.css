@@ -1,0 +1,430 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --font-geist-sans: "Inter", "Segoe UI", system-ui, sans-serif;
+  --font-geist-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --radius: 0.625rem;
+  --background: #ffffff;
+  --foreground: #171717;
+  --card: #ffffff;
+  --card-foreground: #171717;
+  --popover: #ffffff;
+  --popover-foreground: #171717;
+  --primary: #262626;
+  --primary-foreground: #fafafa;
+  --secondary: #f5f5f5;
+  --secondary-foreground: #262626;
+  --muted: #f5f5f5;
+  --muted-foreground: #737373;
+  --accent: #f5f5f5;
+  --accent-foreground: #262626;
+  --destructive: #e11d48;
+  --border: #e5e5e5;
+  --input: #e5e5e5;
+  --ring: #a3a3a3;
+  --chart-1: #e76e50;
+  --chart-2: #2a9d90;
+  --chart-3: #264653;
+  --chart-4: #e8c468;
+  --chart-5: #f4a462;
+  --sidebar: #fafafa;
+  --sidebar-foreground: #171717;
+  --sidebar-primary: #262626;
+  --sidebar-primary-foreground: #fafafa;
+  --sidebar-accent: #f5f5f5;
+  --sidebar-accent-foreground: #262626;
+  --sidebar-border: #e5e5e5;
+  --sidebar-ring: #a3a3a3;
+}
+
+.dark {
+  --background: #171717;
+  --foreground: #fafafa;
+  --card: #262626;
+  --card-foreground: #fafafa;
+  --popover: #262626;
+  --popover-foreground: #fafafa;
+  --primary: #e5e5e5;
+  --primary-foreground: #262626;
+  --secondary: #404040;
+  --secondary-foreground: #fafafa;
+  --muted: #404040;
+  --muted-foreground: #a3a3a3;
+  --accent: #404040;
+  --accent-foreground: #fafafa;
+  --destructive: #f87171;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: #737373;
+  --chart-1: #7c3aed;
+  --chart-2: #10b981;
+  --chart-3: #f59e0b;
+  --chart-4: #c026d3;
+  --chart-5: #e11d48;
+  --sidebar: #262626;
+  --sidebar-foreground: #fafafa;
+  --sidebar-primary: #7c3aed;
+  --sidebar-primary-foreground: #fafafa;
+  --sidebar-accent: #404040;
+  --sidebar-accent-foreground: #fafafa;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #737373;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   DRAG-AND-DROP — smooth transition overrides for @hello-pangea/dnd.
+   The library sets inline styles during drag; we override for polish.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Remove the default blue background the library adds on drag-over */
+[data-rfd-draggable-context-id] [data-rfd-droppable-id].bg-primary\/5 {
+  transition: background-color 0.15s ease;
+}
+
+/* Ensure smooth transitions when items move via keyboard or animation */
+[data-rfd-draggable-context-id] > div > div {
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   RESUME PREVIEW — screen styles for the A4 template.
+   Hard-coded colors so the preview always renders white-on-white
+   regardless of app theme, and prints exactly as shown on screen.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.resume-page {
+  --resume-fit-scale: 1;
+  --resume-density: 1;
+  background: #ffffff;
+  font-family: var(--font-geist-sans), "Inter", "Segoe UI", system-ui, sans-serif;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.resume-content-fitter {
+  transform: scale(var(--resume-fit-scale));
+  transform-origin: top left;
+  width: calc(100% / var(--resume-fit-scale));
+  min-height: calc(100% / var(--resume-fit-scale));
+}
+
+.resume-content-fitter section {
+  padding-top: calc(1.25rem * var(--resume-density));
+}
+
+.resume-content-fitter .space-y-4 > :not([hidden]) ~ :not([hidden]) {
+  margin-top: calc(1rem * var(--resume-density));
+}
+
+.resume-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.12em;
+}
+
+/* Section heading — bold, uppercase, small, dark, with underline */
+.resume-section-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #111827;
+  padding-bottom: 4px;
+  border-bottom: 1.5px solid #e5e7eb;
+  margin: 0;
+}
+
+/* Body paragraph text */
+.resume-body-text {
+  font-size: 11px;
+  line-height: 1.55;
+  color: #374151;
+  margin: 0;
+}
+
+/* Standard bullet list */
+.resume-bullet-list {
+  list-style: disc;
+  margin: 0;
+  padding-left: 18px;
+  color: #374151;
+}
+
+.resume-bullet-list li {
+  font-size: 11px;
+  line-height: 1.5;
+  padding-left: 2px;
+  margin-bottom: 2px;
+}
+
+/* Resume header/photo layout
+   Keep the uploaded photo in its own grid column so header text can never
+   flow underneath or overlap it in preview or PDF export. */
+.resume-header-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: 16px;
+}
+
+.resume-header-grid--with-photo {
+  grid-template-columns: minmax(0, 1fr) 105px;
+}
+
+.resume-header-content {
+  overflow-wrap: anywhere;
+}
+
+.resume-photo {
+  width: 105px;
+  min-width: 105px;
+  max-width: 105px;
+  justify-self: end;
+}
+
+.resume-photo img {
+  display: block;
+  width: 105px;
+  height: 135px;
+  max-width: 100%;
+  object-fit: cover;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   @media print — ATS-compliant PDF export.
+   ────────────────────────────────────────────────────────────────────
+   Strategy:
+   1. Hide ALL app chrome via [data-no-print] + residual "hide everything"
+      with a visibility override for the resume only.
+   2. The resume wrapper gets explicit mm dimensions — no CSS transform.
+   3. Passport photo prints at physical 35×45mm with high-res rendering.
+   4. break-inside: avoid on every entry block prevents orphaned content.
+   5. Zero margins on the @page so the resume fills the full A4 sheet.
+   6. All text remains real DOM nodes → selectable & copy-pasteable in PDF.
+   ═══════════════════════════════════════════════════════════════════════ */
+@media print {
+  /* ── Page setup ────────────────────────────────────────────────── */
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  /* ── Nuclear: hide every single element first ──────────────────── */
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+  }
+
+  body > *:not(#resume-print-root) {
+    display: none !important;
+  }
+
+  /* ── The export path keeps only #resume-print-root ── */
+  #resume-print-root {
+    display: block !important;
+  }
+
+  /* ── A4 paper sizing — overrides the screen scaling container ──── */
+  .a4-scaling-wrapper {
+    display: block !important;
+    width: 210mm !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    transform: none !important;
+    transform-origin: top left !important;
+    overflow: visible !important;
+    flex: none !important;
+  }
+
+  /* ── Resume page itself ────────────────────────────────────────── */
+  .resume-page {
+    width: 210mm !important;
+    height: 297mm !important;
+    min-height: 297mm !important;
+    max-height: 297mm !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+
+  /* ── Header/photo: preserve a dedicated photo column in print/PDF ─ */
+  .resume-page header {
+    padding-right: 10mm !important;
+    padding-left: 10mm !important;
+    padding-top: 10mm !important;
+  }
+
+  .resume-header-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    align-items: start !important;
+    gap: 5mm !important;
+  }
+
+  .resume-header-grid--with-photo {
+    grid-template-columns: minmax(0, 1fr) 35mm !important;
+  }
+
+  .resume-header-content {
+    min-width: 0 !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .resume-photo {
+    width: 35mm !important;
+    min-width: 35mm !important;
+    max-width: 35mm !important;
+    justify-self: end !important;
+  }
+
+  .resume-photo img {
+    width: 35mm !important;
+    height: 45mm !important;
+    max-width: 35mm !important;
+    max-height: 45mm !important;
+    object-fit: cover !important;
+  }
+
+  .resume-content-fitter {
+    transform: scale(var(--resume-fit-scale)) !important;
+    transform-origin: top left !important;
+    width: calc(100% / var(--resume-fit-scale)) !important;
+    min-height: calc(100% / var(--resume-fit-scale)) !important;
+  }
+
+  /* ── Section spacing — use mm for print-accurate margins ────────── */
+  .resume-page section {
+    padding-left: 10mm !important;
+    padding-right: 10mm !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* ── Prevent page breaks inside individual experience/edu blocks ── */
+  .resume-page section > div > div,
+  .resume-page .space-y-4 > div {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* ── Remove shadows, borders, backgrounds from resume content ──── */
+  .resume-page * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* ── Ensure all text is black/dark for print readability ────────── */
+  .resume-page {
+    color: #000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .resume-page h1,
+  .resume-page h2,
+  .resume-page h3 {
+    color: #000 !important;
+  }
+
+  /* ── Remove SVG icons from contact info (print as text only) ───── */
+  .resume-page svg {
+    display: none !important;
+  }
+
+  /* ── Fallback: if the above selectors miss anything, use this ──── */
+  [data-no-print] {
+    display: none !important;
+  }
+
+  /* ── Remove Toaster / Radix portals that might leak into print ── */
+  [data-radix-portal],
+  [role="dialog"],
+  [role="alert"],
+  [data-sonner-toaster] {
+    display: none !important;
+  }
+
+  /* ── Preserve links as clickable annotations where the PDF generator supports them. */
+  .resume-page a {
+    color: inherit !important;
+    text-decoration: underline !important;
+  }
+
+  /* ── Avoid breaking inside list items ──────────────────────────── */
+  .resume-bullet-list li {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* ── Strip framer-motion inline transforms/styles in print ─────── */
+  .resume-page [style*="transform"],
+  .resume-page [style*="opacity"] {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
