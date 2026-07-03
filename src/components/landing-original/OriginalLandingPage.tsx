@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { motion, useScroll, useTransform, useSpring, useMotionTemplate, useMotionValue } from "framer-motion";
 import { ShieldCheck, FileText, GripVertical, ArrowRight } from "lucide-react";
 
@@ -8,19 +9,13 @@ import { ShieldCheck, FileText, GripVertical, ArrowRight } from "lucide-react";
 
 function PlatypusIcon({ size = 32 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 64 64" fill="none">
-      <g stroke="#0a0a0a" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M11 36c0-10.5 8.2-19 18.5-19 6.3 0 11.7 3.2 14.8 8" />
-        <path d="M11 36c3.5 6.7 10 11 18.5 11 6.3 0 11.7-2.8 15.2-7.5" />
-        <path d="M11 36c-4 0-6.5 3-6.5 6s2.7 5.2 6.5 5.2c3.2 0 5.5-2.2 5.5-5.2" />
-        <path d="M44 25l4-1.5" />
-        <path d="M48 23.5c3-1.6 6.3-2.1 9-1.2 3 .9 4.5 3.1 3.7 5.8-.8 2.8-3.4 4.1-6.7 3.9-2.6-.2-5.2-1.2-7.1-2.6" />
-        <path d="M40 47c-.8 3.1.8 6.1 3.8 7.3" />
-        <path d="M21 47c-1.5 3.2-.8 6.3 2.1 8" />
-      </g>
-      <circle cx="29" cy="24" r="2.3" fill="#0a0a0a" />
-      <circle cx="55" cy="27" r="1.2" fill="#0a0a0a" />
-    </svg>
+    <Image
+      src="/logo.png"
+      alt="PlatypusHire"
+      width={size}
+      height={size}
+      className="object-contain"
+    />
   );
 }
 
