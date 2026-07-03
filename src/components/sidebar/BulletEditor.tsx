@@ -85,7 +85,7 @@ export function BulletEditor({
       {bullets.map((bullet, i) => {
         const isHidden = hiddenIndices.includes(i);
         return (
-          <div key={`${i}-${bullet}`} className="group/bullet flex items-start gap-1.5">
+          <div key={i} className="group/bullet flex items-start gap-1.5">
             {/* Visibility toggle */}
             <button
               type="button"

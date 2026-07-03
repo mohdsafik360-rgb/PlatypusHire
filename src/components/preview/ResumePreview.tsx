@@ -31,6 +31,8 @@ export function ResumePreview() {
 
   const hasPhoto = basics.includePassportPhoto !== false && !!basics.passportPhotoUrl;
   const photoScale = clamp(basics.passportPhotoScale || 1, 0.7, 1.35);
+  const photoWidth = PHOTO_W_PX * photoScale;
+  const photoHeight = PHOTO_H_PX * photoScale;
   const hasSummary = basics.summary.trim().length > 0;
   const hasWork = workExperience.some(hasContent);
   const hasEdu = education.some(hasContent);
@@ -91,7 +93,11 @@ export function ResumePreview() {
         <header className="resume-header px-10 pt-10">
           <div
             className={`resume-header-grid ${hasPhoto ? "resume-header-grid--with-photo" : ""}`}
-            style={hasPhoto ? { gridTemplateColumns: `minmax(0, 1fr) ${PHOTO_W_PX * photoScale}px` } : undefined}
+            style={hasPhoto ? {
+              gridTemplateColumns: `minmax(0, 1fr) ${photoWidth}px`,
+              ["--resume-photo-width" as string]: `${photoWidth}px`,
+              ["--resume-photo-height" as string]: `${photoHeight}px`,
+            } : undefined}
           >
             <div className="resume-header-content min-w-0">
               <h1 className="text-[22px] leading-tight font-bold text-gray-900 tracking-tight m-0 break-words">
@@ -135,7 +141,6 @@ export function ResumePreview() {
                   src={basics.passportPhotoUrl}
                   alt={`${basics.fullName || "Resume"} passport photo`}
                   className="rounded object-cover border border-gray-200"
-                  style={{ width: PHOTO_W_PX * photoScale, height: PHOTO_H_PX * photoScale }}
                 />
               </div>
             )}

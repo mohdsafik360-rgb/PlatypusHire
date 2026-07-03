@@ -32,24 +32,10 @@ export function PlatypusLogo({ className = "h-7 w-auto" }: { className?: string 
       <text
         x="56"
         y="27"
-        className="fill-current"
         fontSize="17"
-        fontWeight="600"
         fontFamily="var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif"
         letterSpacing="-0.02em"
-      >
-        Platypus
-      </text>
-      <text
-        x="128"
-        y="27"
-        className="fill-emerald-700"
-        fontSize="17"
-        fontWeight="700"
-        fontFamily="var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif"
-        letterSpacing="-0.02em"
-      >
-        Hire
+      ><tspan className="fill-current" fontWeight="600">Platypus</tspan><tspan className="fill-emerald-700" fontWeight="700">Hire</tspan>
       </text>
     </svg>
   );

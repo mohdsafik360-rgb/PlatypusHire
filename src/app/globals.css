@@ -215,6 +215,8 @@
    Keep the uploaded photo in its own grid column so header text can never
    flow underneath or overlap it in preview or PDF export. */
 .resume-header-grid {
+  --resume-photo-width: 105px;
+  --resume-photo-height: 135px;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-items: start;
@@ -230,16 +232,16 @@
 }
 
 .resume-photo {
-  width: 105px;
-  min-width: 105px;
-  max-width: 105px;
+  width: var(--resume-photo-width);
+  min-width: var(--resume-photo-width);
+  max-width: var(--resume-photo-width);
   justify-self: end;
 }
 
 .resume-photo img {
   display: block;
-  width: 105px;
-  height: 135px;
+  width: var(--resume-photo-width);
+  height: var(--resume-photo-height);
   max-width: 100%;
   object-fit: cover;
 }
@@ -320,6 +322,8 @@
   }
 
   .resume-header-grid {
+    --resume-photo-width: 35mm !important;
+    --resume-photo-height: 45mm !important;
     display: grid !important;
     grid-template-columns: minmax(0, 1fr) !important;
     align-items: start !important;

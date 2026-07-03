@@ -198,6 +198,13 @@ function prepareHtml2CanvasClone(clonedDocument: Document) {
     .querySelectorAll('style, link[rel="stylesheet"]')
     .forEach((element) => element.remove());
 
+  // Remove ALL SVG elements from the cloned DOM.
+  // html2canvas 1.4.x parses computed styles on every node—including hidden
+  // ones—and crashes on modern CSS color functions (oklch, lab, lch) that
+  // Tailwind v4 may apply via utility classes like fill-emerald-700.
+  // Physically removing SVGs prevents the parser from ever encountering them.
+  clonedDocument.querySelectorAll("svg").forEach((svg) => svg.remove());
+
   const style = clonedDocument.createElement("style");
   style.textContent = HTML2CANVAS_SAFE_RESUME_CSS;
   clonedDocument.head.appendChild(style);
