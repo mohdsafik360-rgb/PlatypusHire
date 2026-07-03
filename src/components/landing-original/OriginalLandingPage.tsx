@@ -293,20 +293,6 @@ export default function OriginalLandingPage() {
             padding: "80px 24px 96px",
           }}
         >
-          {/* Floating logo */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
-            style={{ marginBottom: 28 }}
-          >
-            <motion.div
-              animate={{ y: [0, -6, 0] }}
-              transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <Logo size={44} />
-            </motion.div>
-          </motion.div>
 
           {/* Word-by-word headline */}
           <AnimatedHeadline text="Build an ATS-Friendly Resume in Minutes." />

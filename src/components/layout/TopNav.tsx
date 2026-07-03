@@ -111,7 +111,7 @@ export function TopNav({ contentRef }: TopNavProps) {
       className="sticky top-0 z-50 flex h-14 items-center justify-between border-b border-border bg-background/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/60 md:px-6"
     >
       <Link href="/" className="flex items-center gap-2">
-        <PlatypusLogo className="h-7 w-auto" />
+        <PlatypusLogo className="h-9 w-auto" />
       </Link>
 
       <div className="flex items-center gap-2 sm:gap-3">
