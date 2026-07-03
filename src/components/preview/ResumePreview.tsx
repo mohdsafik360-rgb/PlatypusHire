@@ -255,10 +255,11 @@ export function ResumePreview() {
                 {certifications.filter((c) => c.name.trim().length > 0).map((cert) => (
                   <motion.li key={cert.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.2 }} className="flex items-baseline justify-between gap-2 text-[11px]">
                     <span>
-                      <span className="font-semibold text-gray-900"><LinkifiedText text={cert.name} /></span>
+                      <span className="font-semibold text-gray-900">
+                        {cert.url ? <UrlAnchor text={cert.url} displayText={cert.name} /> : <LinkifiedText text={cert.name} />}
+                      </span>
                       {cert.issuer ? <> — <LinkifiedText text={cert.issuer} /></> : ""}
                       {cert.credentialId ? ` (${cert.credentialId})` : ""}
-                      {cert.url ? <> · <UrlAnchor text={cert.url} /></> : ""}
                     </span>
                     <span className="text-[10px] text-gray-500 whitespace-nowrap shrink-0">{formatDate(cert.date)}</span>
                   </motion.li>
