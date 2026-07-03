@@ -5,30 +5,7 @@ import Image from "next/image";
 import { motion, useScroll, useTransform, useSpring, useMotionTemplate, useMotionValue } from "framer-motion";
 import { ShieldCheck, FileText, GripVertical, ArrowRight } from "lucide-react";
 
-// ── Logo ──────────────────────────────────────────────────────────────────────
-
-function PlatypusIcon({ size = 32 }: { size?: number }) {
-  return (
-    <Image
-      src="/logo.png"
-      alt="PlatypusHire"
-      width={size}
-      height={size}
-      className="object-contain"
-    />
-  );
-}
-
-function Logo({ size = 28 }: { size?: number }) {
-  return (
-    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-      <PlatypusIcon size={size} />
-      <span style={{ fontSize: size * 0.55, fontWeight: 600, letterSpacing: "-0.01em", color: "#0a0a0a" }}>
-        Platypus<span style={{ color: "#16a34a" }}>Hire</span>
-      </span>
-    </div>
-  );
-}
+import { PlatypusLogo } from "@/components/layout/PlatypusLogo";
 
 // ── Feature card with 3-D tilt ────────────────────────────────────────────────
 
@@ -250,7 +227,7 @@ export default function OriginalLandingPage() {
           zIndex: 50,
         }}
       >
-        <Logo size={28} />
+        <PlatypusLogo />
         <motion.a
           href="/builder"
           whileHover={{ scale: 1.03, borderColor: "#0a0a0a" }}
@@ -461,7 +438,7 @@ export default function OriginalLandingPage() {
         }}
       >
         <div style={{ opacity: 0.45 }}>
-          <Logo size={22} />
+          <PlatypusLogo />
         </div>
         <p style={{ fontSize: 13, color: "#9ca3af", margin: 0 }}>
           PlatypusHire — 100% client-side, forever free.
