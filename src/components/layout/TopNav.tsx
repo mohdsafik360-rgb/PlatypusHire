@@ -46,21 +46,21 @@ export function TopNav({ contentRef }: TopNavProps) {
         import("jspdf"),
       ]);
 
-      // Strip any CSS transform + explicit dimensions so html2canvas captures
+      // Strip any CSS transform so html2canvas captures
       // the element at its natural A4 pixel size, not the scaled-to-fit preview.
       node.style.transform = "none";
       node.style.marginBottom = "0";
       node.style.marginRight = "0";
-      node.style.width = "";
-      node.style.height = "";
 
       // Two rAFs: first lets the style mutation flush, second waits for the
       // browser to finish the resulting layout pass before we measure.
       await new Promise((r) => requestAnimationFrame(r));
       await new Promise((r) => requestAnimationFrame(r));
 
-      const W = node.scrollWidth;
-      const H = node.scrollHeight;
+      // Force exactly A4 pixel dimensions (630x891) to guarantee correct aspect ratio,
+      // ignoring any scroll overflow.
+      const W = 630;
+      const H = 891;
       const PIXEL_RATIO = Math.min(3, window.devicePixelRatio || 2);
 
       const canvas = await html2canvas(node, {
