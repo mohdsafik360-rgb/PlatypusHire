@@ -6,10 +6,10 @@ import type { ResumeData } from "@/types/resume";
 Font.register({
   family: "Inter",
   fonts: [
-    { src: "https://raw.githubusercontent.com/google/fonts/main/ofl/inter/static/Inter-Regular.ttf", fontWeight: 400 },
-    { src: "https://raw.githubusercontent.com/google/fonts/main/ofl/inter/static/Inter-Medium.ttf", fontWeight: 500 },
-    { src: "https://raw.githubusercontent.com/google/fonts/main/ofl/inter/static/Inter-SemiBold.ttf", fontWeight: 600 },
-    { src: "https://raw.githubusercontent.com/google/fonts/main/ofl/inter/static/Inter-Bold.ttf", fontWeight: 700 },
+    { src: "https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZg.ttf", fontWeight: 400 },
+    { src: "https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuI6fMZg.ttf", fontWeight: 500 },
+    { src: "https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuGKYMZg.ttf", fontWeight: 600 },
+    { src: "https://fonts.gstatic.com/s/inter/v20/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuFuYMZg.ttf", fontWeight: 700 },
   ],
 });
 
