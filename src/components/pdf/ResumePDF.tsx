@@ -17,167 +17,7 @@ Font.register({
 const PHOTO_W_PT = 105; 
 const PHOTO_H_PT = 135;
 
-const styles = StyleSheet.create({
-  page: {
-    fontFamily: "Inter",
-    backgroundColor: "#ffffff",
-    color: "#374151", // text-gray-700
-    fontSize: 11,
-    lineHeight: 1.45,
-    paddingTop: 40,
-    paddingBottom: 40,
-  },
-  header: {
-    paddingHorizontal: 40,
-    flexDirection: "row",
-    alignItems: "flex-start",
-    marginBottom: 20,
-  },
-  headerContent: {
-    flex: 1,
-    paddingRight: 16,
-  },
-  photo: {
-    width: PHOTO_W_PT,
-    height: PHOTO_H_PT,
-    objectFit: "cover",
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: "#e5e7eb", // border-gray-200
-  },
-  name: {
-    fontSize: 22,
-    fontWeight: 700,
-    color: "#111827", // text-gray-900
-    lineHeight: 1.15,
-  },
-  jobTitle: {
-    fontSize: 12,
-    fontWeight: 500,
-    color: "#6b7280", // text-gray-500
-    marginTop: 4,
-  },
-  contactList: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    marginTop: 12,
-    rowGap: 4,
-    columnGap: 16,
-  },
-  contactItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    fontSize: 10,
-    color: "#4b5563", // text-gray-600
-  },
-  contactLink: {
-    color: "#4b5563",
-    textDecoration: "underline",
-  },
-  section: {
-    paddingHorizontal: 40,
-    paddingTop: 20,
-  },
-  sectionTitle: {
-    fontSize: 11,
-    fontWeight: 700,
-    color: "#111827",
-    textTransform: "uppercase",
-    letterSpacing: 0.8,
-    borderBottomWidth: 1.5,
-    borderBottomColor: "#e5e7eb",
-    paddingBottom: 4,
-    marginBottom: 12,
-  },
-  summaryText: {
-    fontSize: 11,
-    color: "#374151",
-    lineHeight: 1.55,
-  },
-  entry: {
-    marginBottom: 16,
-  },
-  entryHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-  },
-  entryTitleContainer: {
-    flex: 1,
-    paddingRight: 8,
-  },
-  entryTitle: {
-    fontSize: 12,
-    fontWeight: 600,
-    color: "#111827",
-    lineHeight: 1.25,
-  },
-  entrySubtitle: {
-    fontSize: 11,
-    color: "#4b5563",
-    marginTop: 2,
-  },
-  entryDate: {
-    fontSize: 10,
-    color: "#6b7280",
-  },
-  bulletList: {
-    marginTop: 6,
-    paddingLeft: 10,
-  },
-  bulletItem: {
-    flexDirection: "row",
-    marginBottom: 2,
-  },
-  bulletPoint: {
-    width: 10,
-    fontSize: 11,
-    color: "#374151",
-  },
-  bulletText: {
-    flex: 1,
-    fontSize: 11,
-    color: "#374151",
-    lineHeight: 1.5,
-  },
-  skillItem: {
-    flexDirection: "row",
-    marginBottom: 6,
-    fontSize: 11,
-  },
-  skillCategory: {
-    fontWeight: 600,
-    color: "#111827",
-    marginRight: 8,
-  },
-  skillText: {
-    color: "#374151",
-    flex: 1,
-  },
-  projectTech: {
-    fontSize: 10,
-    color: "#6b7280",
-    marginTop: 2,
-  },
-  projectUrl: {
-    fontSize: 10,
-    color: "#9ca3af", // text-gray-400
-    marginTop: 2,
-  },
-  certItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 6,
-    fontSize: 11,
-  },
-  certTitle: {
-    fontWeight: 600,
-    color: "#111827",
-  },
-  certText: {
-    color: "#111827",
-  },
-});
+
 
 const LINK_RE = /((?:https?:\/\/|www\.)[^\s<>()]+|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(?:\/[^\s<>()]*)?)/g;
 
@@ -244,7 +84,15 @@ function hasContent(item: object): boolean {
   return strFields.some((value) => value.trim().length > 0);
 }
 
-export function ResumePDF({ data }: { data: ResumeData }) {
+export function ResumePDF({ 
+  data, 
+  density = 1, 
+  scale = 1 
+}: { 
+  data: ResumeData; 
+  density?: number; 
+  scale?: number; 
+}) {
   const {
     basics,
     workExperience,
@@ -256,6 +104,168 @@ export function ResumePDF({ data }: { data: ResumeData }) {
 
   const hasPhoto = basics.includePassportPhoto !== false && !!basics.passportPhotoUrl;
   const photoScale = Math.min(1.35, Math.max(0.7, basics.passportPhotoScale || 1));
+
+  const styles = React.useMemo(() => StyleSheet.create({
+    page: {
+      fontFamily: "Inter",
+      backgroundColor: "#ffffff",
+      color: "#374151", // text-gray-700
+      fontSize: 11 * scale,
+      lineHeight: 1.45,
+      paddingTop: 40 * scale,
+      paddingBottom: 40 * scale,
+    },
+    header: {
+      paddingHorizontal: 40 * scale,
+      flexDirection: "row",
+      alignItems: "flex-start",
+      marginBottom: 20 * scale * density,
+    },
+    headerContent: {
+      flex: 1,
+      paddingRight: 16 * scale,
+    },
+    photo: {
+      width: PHOTO_W_PT * photoScale * scale,
+      height: PHOTO_H_PT * photoScale * scale,
+      objectFit: "cover",
+      borderRadius: 4 * scale,
+      borderWidth: 1 * scale,
+      borderColor: "#e5e7eb", // border-gray-200
+    },
+    name: {
+      fontSize: 22 * scale,
+      fontWeight: 700,
+      color: "#111827", // text-gray-900
+      lineHeight: 1.15,
+    },
+    jobTitle: {
+      fontSize: 12 * scale,
+      fontWeight: 500,
+      color: "#6b7280", // text-gray-500
+      marginTop: 4 * scale,
+    },
+    contactList: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      marginTop: 12 * scale,
+      rowGap: 4 * scale,
+      columnGap: 16 * scale,
+    },
+    contactItem: {
+      flexDirection: "row",
+      alignItems: "center",
+      fontSize: 10 * scale,
+      color: "#4b5563", // text-gray-600
+    },
+    contactLink: {
+      color: "#4b5563",
+      textDecoration: "underline",
+    },
+    section: {
+      paddingHorizontal: 40 * scale,
+      paddingTop: 20 * scale * density,
+    },
+    sectionTitle: {
+      fontSize: 11 * scale,
+      fontWeight: 700,
+      color: "#111827",
+      textTransform: "uppercase",
+      letterSpacing: 0.8 * scale,
+      borderBottomWidth: 1.5 * scale,
+      borderBottomColor: "#e5e7eb",
+      paddingBottom: 4 * scale,
+      marginBottom: 12 * scale,
+    },
+    summaryText: {
+      fontSize: 11 * scale,
+      color: "#374151",
+      lineHeight: 1.55,
+    },
+    entry: {
+      marginBottom: 16 * scale * density,
+    },
+    entryHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "flex-start",
+    },
+    entryTitleContainer: {
+      flex: 1,
+      paddingRight: 8 * scale,
+    },
+    entryTitle: {
+      fontSize: 12 * scale,
+      fontWeight: 600,
+      color: "#111827",
+      lineHeight: 1.25,
+    },
+    entrySubtitle: {
+      fontSize: 11 * scale,
+      color: "#4b5563",
+      marginTop: 2 * scale,
+    },
+    entryDate: {
+      fontSize: 10 * scale,
+      color: "#6b7280",
+    },
+    bulletList: {
+      marginTop: 6 * scale,
+      paddingLeft: 10 * scale,
+    },
+    bulletItem: {
+      flexDirection: "row",
+      marginBottom: 2 * scale,
+    },
+    bulletPoint: {
+      width: 10 * scale,
+      fontSize: 11 * scale,
+      color: "#374151",
+    },
+    bulletText: {
+      flex: 1,
+      fontSize: 11 * scale,
+      color: "#374151",
+      lineHeight: 1.5,
+    },
+    skillItem: {
+      flexDirection: "row",
+      marginBottom: 6 * scale,
+      fontSize: 11 * scale,
+    },
+    skillCategory: {
+      fontWeight: 600,
+      color: "#111827",
+      marginRight: 8 * scale,
+    },
+    skillText: {
+      color: "#374151",
+      flex: 1,
+    },
+    projectTech: {
+      fontSize: 10 * scale,
+      color: "#6b7280",
+      marginTop: 2 * scale,
+    },
+    projectUrl: {
+      fontSize: 10 * scale,
+      color: "#9ca3af", // text-gray-400
+      marginTop: 2 * scale,
+    },
+    certItem: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      marginBottom: 6 * scale,
+      fontSize: 11 * scale,
+    },
+    certTitle: {
+      fontWeight: 600,
+      color: "#111827",
+    },
+    certText: {
+      color: "#111827",
+    },
+  }), [density, scale, photoScale]);
   
   const hasSummary = basics.summary.trim().length > 0;
   const hasWork = workExperience.some(hasContent);
@@ -313,10 +323,7 @@ export function ResumePDF({ data }: { data: ResumeData }) {
           {hasPhoto && (
             <Image 
               src={basics.passportPhotoUrl} 
-              style={[
-                styles.photo, 
-                { width: PHOTO_W_PT * photoScale, height: PHOTO_H_PT * photoScale }
-              ]} 
+              style={styles.photo} 
             />
           )}
         </View>
@@ -452,7 +459,7 @@ export function ResumePDF({ data }: { data: ResumeData }) {
                 <Text style={styles.certText}>
                   <Text style={styles.certTitle}>
                     {cert.url ? (
-                      <Link src={normalizeUrl(cert.url)} style={{ color: "inherit", textDecoration: "none" }}>{cert.name}</Link>
+                      <Link src={normalizeUrl(cert.url)} style={{ color: "inherit", textDecoration: "underline" }}>{cert.name}</Link>
                     ) : (
                       <LinkifiedTextPDF text={cert.name} />
                     )}

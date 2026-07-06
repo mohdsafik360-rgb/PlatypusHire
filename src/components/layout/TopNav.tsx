@@ -35,7 +35,27 @@ export function TopNav({ contentRef }: TopNavProps) {
       
       const resumeData = useResumeStore.getState();
       
-      const blob = await pdf(<ResumePDF data={resumeData} />).toBlob();
+      let density = 1;
+      let scale = 1;
+      if (typeof document !== "undefined") {
+        const previewEl = document.getElementById("resume-preview");
+        if (previewEl) {
+          const dVal = previewEl.style.getPropertyValue("--resume-density") || 
+                       window.getComputedStyle(previewEl).getPropertyValue("--resume-density");
+          const sVal = previewEl.style.getPropertyValue("--resume-fit-scale") || 
+                       window.getComputedStyle(previewEl).getPropertyValue("--resume-fit-scale");
+          if (dVal) {
+            const parsedD = parseFloat(dVal);
+            if (!isNaN(parsedD)) density = parsedD;
+          }
+          if (sVal) {
+            const parsedS = parseFloat(sVal);
+            if (!isNaN(parsedS)) scale = parsedS;
+          }
+        }
+      }
+
+      const blob = await pdf(<ResumePDF data={resumeData} density={density} scale={scale} />).toBlob();
       
       const name = resumeData.basics.fullName?.trim() || "resume";
       const safeName = name.toLowerCase().replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "") || "resume";
