@@ -281,7 +281,7 @@ export default function OriginalLandingPage() {
             transition={{ duration: 0.6, delay: 0.9 }}
             style={{ fontSize: 16, color: "#6b7280", margin: "0 0 36px", maxWidth: 480 }}
           >
-            100% private. Serverless. Featuring standard Passport Photo support.
+            100% private. Serverless.
           </motion.p>
 
           {/* CTA button */}
