@@ -13,11 +13,13 @@ Font.register({
   ],
 });
 
-// Dimensions (A4 at standard 72 DPI is 595 x 842 points)
-const PHOTO_W_PT = 105; 
-const PHOTO_H_PT = 135;
-
-
+// Match the preview's logical A4 canvas (630 x 891 px) to PDF points.
+const A4_W_PT = 595.28;
+const A4_W_PX = 210 * 3;
+const PX_TO_PT = A4_W_PT / A4_W_PX;
+const px = (value: number) => value * PX_TO_PT;
+const PHOTO_W_PT = px(105);
+const PHOTO_H_PT = px(135);
 
 const LINK_RE = /((?:https?:\/\/|www\.)[^\s<>()]+|(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(?:\/[^\s<>()]*)?)/g;
 
@@ -110,52 +112,52 @@ export function ResumePDF({
       fontFamily: "Inter",
       backgroundColor: "#ffffff",
       color: "#374151", // text-gray-700
-      fontSize: 11 * scale,
+      fontSize: px(11) * scale,
       lineHeight: 1.45,
-      paddingTop: 40 * scale,
-      paddingBottom: 40 * scale,
+      paddingTop: px(40) * scale,
+      paddingBottom: px(6) * scale, // Preview has no explicit bottom padding
     },
     header: {
-      paddingHorizontal: 40 * scale,
+      paddingHorizontal: px(40) * scale,
       flexDirection: "row",
       alignItems: "flex-start",
-      marginBottom: 20 * scale * density,
+      marginBottom: 0,
     },
     headerContent: {
       flex: 1,
-      paddingRight: 16 * scale,
+      paddingRight: px(16) * scale,
     },
     photo: {
       width: PHOTO_W_PT * photoScale * scale,
       height: PHOTO_H_PT * photoScale * scale,
       objectFit: "cover",
-      borderRadius: 4 * scale,
-      borderWidth: 1 * scale,
+      borderRadius: px(4) * scale,
+      borderWidth: px(1) * scale,
       borderColor: "#e5e7eb", // border-gray-200
     },
     name: {
-      fontSize: 22 * scale,
+      fontSize: px(22) * scale,
       fontWeight: 700,
       color: "#111827", // text-gray-900
       lineHeight: 1.15,
     },
     jobTitle: {
-      fontSize: 12 * scale,
+      fontSize: px(12) * scale,
       fontWeight: 500,
       color: "#6b7280", // text-gray-500
-      marginTop: 4 * scale,
+      marginTop: px(4) * scale,
     },
     contactList: {
       flexDirection: "row",
       flexWrap: "wrap",
-      marginTop: 12 * scale,
-      rowGap: 4 * scale,
-      columnGap: 16 * scale,
+      marginTop: px(12) * scale,
+      rowGap: px(4) * scale,
+      columnGap: px(16) * scale,
     },
     contactItem: {
       flexDirection: "row",
       alignItems: "center",
-      fontSize: 10 * scale,
+      fontSize: px(10) * scale,
       color: "#4b5563", // text-gray-600
     },
     contactLink: {
@@ -163,100 +165,113 @@ export function ResumePDF({
       textDecoration: "underline",
     },
     section: {
-      paddingHorizontal: 40 * scale,
-      paddingTop: 20 * scale * density,
+      paddingHorizontal: px(40) * scale,
+      paddingTop: px(20) * scale * density,
     },
     sectionTitle: {
-      fontSize: 11 * scale,
+      fontSize: px(11) * scale,
       fontWeight: 700,
       color: "#111827",
       textTransform: "uppercase",
-      letterSpacing: 0.8 * scale,
-      borderBottomWidth: 1.5 * scale,
+      letterSpacing: px(0.88) * scale,
+      borderBottomWidth: px(1.5) * scale,
       borderBottomColor: "#e5e7eb",
-      paddingBottom: 4 * scale,
-      marginBottom: 12 * scale,
+      paddingBottom: px(4) * scale,
+      marginBottom: 0, // Preview has no margin-bottom on section title; spacing comes from child mt-*
     },
     summaryText: {
-      fontSize: 11 * scale,
+      fontSize: px(11) * scale,
       color: "#374151",
       lineHeight: 1.55,
+      marginTop: px(8) * scale, // Matches preview's mt-2 on summary paragraph
+    },
+    entryContainer: {
+      marginTop: px(12) * scale, // Matches preview's mt-3 on entry container
     },
     entry: {
-      marginBottom: 16 * scale * density,
+      marginBottom: px(16) * scale * density,
+    },
+    lastEntry: {
+      marginBottom: 0,
     },
     entryHeader: {
       flexDirection: "row",
       justifyContent: "space-between",
-      alignItems: "flex-start",
+      alignItems: "flex-start", // react-pdf doesn't support baseline; flex-start is closest
     },
     entryTitleContainer: {
       flex: 1,
-      paddingRight: 8 * scale,
+      paddingRight: px(8) * scale,
     },
     entryTitle: {
-      fontSize: 12 * scale,
+      fontSize: px(12) * scale,
       fontWeight: 600,
       color: "#111827",
       lineHeight: 1.25,
     },
     entrySubtitle: {
-      fontSize: 11 * scale,
+      fontSize: px(11) * scale,
       color: "#4b5563",
-      marginTop: 2 * scale,
+      marginTop: px(2) * scale,
     },
     entryDate: {
-      fontSize: 10 * scale,
+      fontSize: px(10) * scale,
       color: "#6b7280",
     },
     bulletList: {
-      marginTop: 6 * scale,
-      paddingLeft: 10 * scale,
+      marginTop: px(6) * scale,
+      paddingLeft: px(18) * scale, // Matches preview's .resume-bullet-list padding-left: 18px
     },
     bulletItem: {
       flexDirection: "row",
-      marginBottom: 2 * scale,
+      marginBottom: px(2) * scale,
     },
     bulletPoint: {
-      width: 10 * scale,
-      fontSize: 11 * scale,
+      width: px(10) * scale,
+      fontSize: px(11) * scale,
       color: "#374151",
     },
     bulletText: {
       flex: 1,
-      fontSize: 11 * scale,
+      fontSize: px(11) * scale,
       color: "#374151",
       lineHeight: 1.5,
     },
+    skillContainer: {
+      marginTop: px(8) * scale, // Matches preview's mt-2 on skills list
+    },
     skillItem: {
       flexDirection: "row",
-      marginBottom: 6 * scale,
-      fontSize: 11 * scale,
+      marginBottom: px(6) * scale,
+      fontSize: px(11) * scale,
     },
     skillCategory: {
       fontWeight: 600,
       color: "#111827",
-      marginRight: 8 * scale,
+      marginRight: px(8) * scale,
     },
     skillText: {
       color: "#374151",
       flex: 1,
     },
     projectTech: {
-      fontSize: 10 * scale,
+      fontSize: px(10) * scale,
       color: "#6b7280",
-      marginTop: 2 * scale,
+      marginTop: px(2) * scale,
     },
     projectUrl: {
-      fontSize: 10 * scale,
+      fontSize: px(10) * scale,
       color: "#9ca3af", // text-gray-400
-      marginTop: 2 * scale,
+      marginTop: px(2) * scale,
+    },
+    certContainer: {
+      marginTop: px(8) * scale, // Matches preview's mt-2 on cert list
     },
     certItem: {
       flexDirection: "row",
       justifyContent: "space-between",
-      marginBottom: 6 * scale,
-      fontSize: 11 * scale,
+      marginBottom: px(6) * scale,
+      fontSize: px(11) * scale,
     },
     certTitle: {
       fontWeight: 600,
@@ -340,31 +355,33 @@ export function ResumePDF({
         {hasWork && (
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Work Experience</Text>
-            {workExperience.filter(hasContent).map((exp) => {
-              const visibleBullets = getVisibleBullets(exp.description, exp.hiddenBulletIndices);
-              return (
-                <View key={exp.id} style={styles.entry} wrap={false}>
-                  <View style={styles.entryHeader}>
-                    <View style={styles.entryTitleContainer}>
-                      <Text style={styles.entryTitle}><LinkifiedTextPDF text={exp.position || "Position"} /></Text>
-                      <Text style={styles.entrySubtitle}><LinkifiedTextPDF text={`${exp.company}${exp.location ? ` · ${exp.location}` : ""}`} /></Text>
+            <View style={styles.entryContainer}>
+              {workExperience.filter(hasContent).map((exp, index, items) => {
+                const visibleBullets = getVisibleBullets(exp.description, exp.hiddenBulletIndices);
+                return (
+                  <View key={exp.id} style={index === items.length - 1 ? [styles.entry, styles.lastEntry] : styles.entry} wrap={false}>
+                    <View style={styles.entryHeader}>
+                      <View style={styles.entryTitleContainer}>
+                        <Text style={styles.entryTitle}><LinkifiedTextPDF text={exp.position || "Position"} /></Text>
+                        <Text style={styles.entrySubtitle}><LinkifiedTextPDF text={`${exp.company}${exp.location ? ` · ${exp.location}` : ""}`} /></Text>
+                      </View>
+                      <Text style={styles.entryDate}>{formatDateRange(exp.startDate, exp.isCurrent ? "present" : exp.endDate)}</Text>
                     </View>
-                    <Text style={styles.entryDate}>{formatDateRange(exp.startDate, exp.isCurrent ? "present" : exp.endDate)}</Text>
+                    
+                    {visibleBullets.length > 0 && (
+                      <View style={styles.bulletList}>
+                        {visibleBullets.map((b, i) => (
+                          <View key={i} style={styles.bulletItem}>
+                            <Text style={styles.bulletPoint}>•</Text>
+                            <LinkifiedTextPDF text={b} style={styles.bulletText} />
+                          </View>
+                        ))}
+                      </View>
+                    )}
                   </View>
-                  
-                  {visibleBullets.length > 0 && (
-                    <View style={styles.bulletList}>
-                      {visibleBullets.map((b, i) => (
-                        <View key={i} style={styles.bulletItem}>
-                          <Text style={styles.bulletPoint}>•</Text>
-                          <LinkifiedTextPDF text={b} style={styles.bulletText} />
-                        </View>
-                      ))}
-                    </View>
-                  )}
-                </View>
-              );
-            })}
+                );
+              })}
+            </View>
           </View>
         )}
 
@@ -372,32 +389,34 @@ export function ResumePDF({
         {hasEdu && (
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Education</Text>
-            {education.filter(hasContent).map((edu) => {
-              const visibleBullets = getVisibleBullets(edu.highlights, edu.hiddenBulletIndices);
-              const degreeLine = [edu.degree, edu.field].filter(Boolean).join(" in ");
-              return (
-                <View key={edu.id} style={styles.entry} wrap={false}>
-                  <View style={styles.entryHeader}>
-                    <View style={styles.entryTitleContainer}>
-                      <Text style={styles.entryTitle}><LinkifiedTextPDF text={degreeLine || edu.institution || "Institution"} /></Text>
-                      <Text style={styles.entrySubtitle}><LinkifiedTextPDF text={`${edu.institution}${edu.gpa ? ` · GPA: ${edu.gpa}` : ""}`} /></Text>
+            <View style={styles.entryContainer}>
+              {education.filter(hasContent).map((edu, index, items) => {
+                const visibleBullets = getVisibleBullets(edu.highlights, edu.hiddenBulletIndices);
+                const degreeLine = [edu.degree, edu.field].filter(Boolean).join(" in ");
+                return (
+                  <View key={edu.id} style={index === items.length - 1 ? [styles.entry, styles.lastEntry] : styles.entry} wrap={false}>
+                    <View style={styles.entryHeader}>
+                      <View style={styles.entryTitleContainer}>
+                        <Text style={styles.entryTitle}><LinkifiedTextPDF text={degreeLine || edu.institution || "Institution"} /></Text>
+                        <Text style={styles.entrySubtitle}><LinkifiedTextPDF text={`${edu.institution}${edu.gpa ? ` · GPA: ${edu.gpa}` : ""}`} /></Text>
+                      </View>
+                      <Text style={styles.entryDate}>{formatDateRange(edu.startDate, edu.endDate)}</Text>
                     </View>
-                    <Text style={styles.entryDate}>{formatDateRange(edu.startDate, edu.endDate)}</Text>
+                    
+                    {visibleBullets.length > 0 && (
+                      <View style={styles.bulletList}>
+                        {visibleBullets.map((b, i) => (
+                          <View key={i} style={styles.bulletItem}>
+                            <Text style={styles.bulletPoint}>•</Text>
+                            <LinkifiedTextPDF text={b} style={styles.bulletText} />
+                          </View>
+                        ))}
+                      </View>
+                    )}
                   </View>
-                  
-                  {visibleBullets.length > 0 && (
-                    <View style={styles.bulletList}>
-                      {visibleBullets.map((b, i) => (
-                        <View key={i} style={styles.bulletItem}>
-                          <Text style={styles.bulletPoint}>•</Text>
-                          <LinkifiedTextPDF text={b} style={styles.bulletText} />
-                        </View>
-                      ))}
-                    </View>
-                  )}
-                </View>
-              );
-            })}
+                );
+              })}
+            </View>
           </View>
         )}
 
@@ -405,12 +424,14 @@ export function ResumePDF({
         {hasSkills && (
           <View style={styles.section} wrap={false}>
             <Text style={styles.sectionTitle}>Skills</Text>
-            {skillCategories.filter((c) => c.skills.trim().length > 0).map((cat) => (
-              <View key={cat.id} style={styles.skillItem}>
-                <Text style={styles.skillCategory}>{cat.name || "Category"}:</Text>
-                <Text style={styles.skillText}><LinkifiedTextPDF text={cat.skills} /></Text>
-              </View>
-            ))}
+            <View style={styles.skillContainer}>
+              {skillCategories.filter((c) => c.skills.trim().length > 0).map((cat, index, items) => (
+                <View key={cat.id} style={index === items.length - 1 ? [styles.skillItem, styles.lastEntry] : styles.skillItem}>
+                  <Text style={styles.skillCategory}>{cat.name || "Category"}:</Text>
+                  <Text style={styles.skillText}><LinkifiedTextPDF text={cat.skills} /></Text>
+                </View>
+              ))}
+            </View>
           </View>
         )}
 
@@ -418,35 +439,37 @@ export function ResumePDF({
         {hasProjects && (
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Projects</Text>
-            {projects.filter(hasContent).map((proj) => {
-              const visibleBullets = getVisibleBullets(proj.description, proj.hiddenBulletIndices);
-              return (
-                <View key={proj.id} style={styles.entry} wrap={false}>
-                  <View style={styles.entryHeader}>
-                    <View style={styles.entryTitleContainer}>
-                      <Text style={styles.entryTitle}><LinkifiedTextPDF text={proj.name || "Project"} /></Text>
+            <View style={styles.entryContainer}>
+              {projects.filter(hasContent).map((proj, index, items) => {
+                const visibleBullets = getVisibleBullets(proj.description, proj.hiddenBulletIndices);
+                return (
+                  <View key={proj.id} style={index === items.length - 1 ? [styles.entry, styles.lastEntry] : styles.entry} wrap={false}>
+                    <View style={styles.entryHeader}>
+                      <View style={styles.entryTitleContainer}>
+                        <Text style={styles.entryTitle}><LinkifiedTextPDF text={proj.name || "Project"} /></Text>
+                      </View>
+                      <Text style={styles.entryDate}>{formatDateRange(proj.startDate, proj.endDate)}</Text>
                     </View>
-                    <Text style={styles.entryDate}>{formatDateRange(proj.startDate, proj.endDate)}</Text>
+                    {proj.technologies && <Text style={styles.projectTech}><LinkifiedTextPDF text={proj.technologies} /></Text>}
+                    {proj.url && (
+                      <Text style={styles.projectUrl}>
+                        <Link src={normalizeUrl(proj.url)} style={{ color: "inherit", textDecoration: "underline" }}>{proj.url}</Link>
+                      </Text>
+                    )}
+                    {visibleBullets.length > 0 && (
+                      <View style={styles.bulletList}>
+                        {visibleBullets.map((b, i) => (
+                          <View key={i} style={styles.bulletItem}>
+                            <Text style={styles.bulletPoint}>•</Text>
+                            <LinkifiedTextPDF text={b} style={styles.bulletText} />
+                          </View>
+                        ))}
+                      </View>
+                    )}
                   </View>
-                  {proj.technologies && <Text style={styles.projectTech}><LinkifiedTextPDF text={proj.technologies} /></Text>}
-                  {proj.url && (
-                    <Text style={styles.projectUrl}>
-                      <Link src={normalizeUrl(proj.url)} style={{ color: "inherit", textDecoration: "underline" }}>{proj.url}</Link>
-                    </Text>
-                  )}
-                  {visibleBullets.length > 0 && (
-                    <View style={styles.bulletList}>
-                      {visibleBullets.map((b, i) => (
-                        <View key={i} style={styles.bulletItem}>
-                          <Text style={styles.bulletPoint}>•</Text>
-                          <LinkifiedTextPDF text={b} style={styles.bulletText} />
-                        </View>
-                      ))}
-                    </View>
-                  )}
-                </View>
-              );
-            })}
+                );
+              })}
+            </View>
           </View>
         )}
 
@@ -454,22 +477,24 @@ export function ResumePDF({
         {hasCerts && (
           <View style={styles.section} wrap={false}>
             <Text style={styles.sectionTitle}>Certifications</Text>
-            {certifications.filter((c) => c.name.trim().length > 0).map((cert) => (
-              <View key={cert.id} style={styles.certItem}>
-                <Text style={styles.certText}>
-                  <Text style={styles.certTitle}>
-                    {cert.url ? (
-                      <Link src={normalizeUrl(cert.url)} style={{ color: "inherit", textDecoration: "underline" }}>{cert.name}</Link>
-                    ) : (
-                      <LinkifiedTextPDF text={cert.name} />
-                    )}
+            <View style={styles.certContainer}>
+              {certifications.filter((c) => c.name.trim().length > 0).map((cert, index, items) => (
+                <View key={cert.id} style={index === items.length - 1 ? [styles.certItem, styles.lastEntry] : styles.certItem}>
+                  <Text style={styles.certText}>
+                    <Text style={styles.certTitle}>
+                      {cert.url ? (
+                        <Link src={normalizeUrl(cert.url)} style={{ color: "inherit", textDecoration: "underline" }}>{cert.name}</Link>
+                      ) : (
+                        <LinkifiedTextPDF text={cert.name} />
+                      )}
+                    </Text>
+                    {cert.issuer ? <Text> — <LinkifiedTextPDF text={cert.issuer} /></Text> : ""}
+                    {cert.credentialId ? <Text> ({cert.credentialId})</Text> : ""}
                   </Text>
-                  {cert.issuer ? <Text> — <LinkifiedTextPDF text={cert.issuer} /></Text> : ""}
-                  {cert.credentialId ? <Text> ({cert.credentialId})</Text> : ""}
-                </Text>
-                <Text style={styles.entryDate}>{cert.date}</Text>
-              </View>
-            ))}
+                  <Text style={styles.entryDate}>{cert.date}</Text>
+                </View>
+              ))}
+            </View>
           </View>
         )}
 
